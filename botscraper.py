@@ -108,8 +108,13 @@ class NewsBot:
         return image_filename
 
     def save_to_excel(self, news_data):
+        output_dir = os.path.join(os.getcwd(), "output") 
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        excel_file_path = os.path.join(output_dir, "news_data.xlsx")
         df = pd.DataFrame(news_data)
-        df.to_excel("/output/news_data.xlsx", index=False)
+        df.to_excel(excel_file_path, index=False)
         self.logger.info("News data saved to Excel.")
 
     def run(self):
