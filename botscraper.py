@@ -10,13 +10,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException, TimeoutException, NoSuchElementException
 from selenium.webdriver.common.keys import Keys
-from RPA.Robocloud.Items import get_variable
 
 class NewsBot:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.setup_logging()
         self.driver = self.setup_driver()
+        os.environ["SEARCH_PHRASE"] = "Bitcoin"
+        os.environ["TOPIC"] = "Business"
 
     def setup_logging(self):
         logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -112,8 +113,8 @@ class NewsBot:
         self.logger.info("News data saved to Excel.")
 
     def run(self):
-        search_phrase = get_variable("search_phrase")
-        topic = get_variable("topic")
+        search_phrase = os.getenv("search_phrase")
+        topic = os.getenv("topic")
 
         if not search_phrase or not topic:
             self.logger.error("Search phrase or topic not provided.")
